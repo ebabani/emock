@@ -29,19 +29,15 @@ var _ = Describe("Mock", func() {
 				Expect(ret).To(BeEmpty())
 			})
 
-			Describe("args", func() {
-				It("should record the right args", func() {
-					Expect(mockObj.GetArgsForCall(0)).To(MatchArgs(123, "ERGIN"))
-				})
+			It("should record the right args", func() {
+				Expect(mockObj.GetArgsForCall(0)).To(MatchArgs(123, "ERGIN"))
 			})
 
-			Describe("call count", func() {
-				It("should have a call count of 1", func() {
-					Expect(mockObj.CallCount()).To(Equal(1))
-				})
+			It("should have a call count of 1", func() {
+				Expect(mockObj.CallCount()).To(Equal(1))
 			})
 
-			Describe("R estore", func() {
+			Describe("Restore", func() {
 				BeforeEach(func() {
 					mockObj.Restore()
 					ret = myFunc(123, "ERGIN")
@@ -162,8 +158,8 @@ var _ = Describe("Mock", func() {
 		})
 	})
 
-	Describe("MockWithRet", func() {
-		Describe("when mocking a function with one return", func() {
+	Describe("SetReturns", func() {
+		Describe("when calling the mock with custom return values set", func() {
 				var myFunc func(a int, b string) string
 
 			var ret string
@@ -179,23 +175,19 @@ var _ = Describe("Mock", func() {
 				ret = myFunc(123, "ERGIN")
 			})
 
-			It("should return an empty string", func() {
+			It("should return the specified return values", func() {
 				Expect(ret).To(Equal("AAAA"))
 			})
 
-			Describe("args", func() {
-				It("should record the right args", func() {
-					Expect(mockObj.GetArgsForCall(0)).To(MatchArgs(123, "ERGIN"))
-				})
+			It("should record the right args", func() {
+				Expect(mockObj.GetArgsForCall(0)).To(MatchArgs(123, "ERGIN"))
 			})
 
-			Describe("call count", func() {
-				It("should have a call count of 1", func() {
-					Expect(mockObj.CallCount()).To(Equal(1))
-				})
+			It("should have a call count of 1", func() {
+				Expect(mockObj.CallCount()).To(Equal(1))
 			})
 
-			Describe("R estore", func() {
+			Describe("Restore", func() {
 				BeforeEach(func() {
 					mockObj.Restore()
 					ret = myFunc(123, "ERGIN")
@@ -229,19 +221,15 @@ var _ = Describe("Mock", func() {
 				Expect(ret).To(Equal("AAAA"))
 			})
 
-			FDescribe("args", func() {
-				It("should record the right args", func() {
-					Expect(mockObj.GetArgsForCall(0)).To(MatchArgs(123, "ERGIN"))
-				})
+			It("should record the right args", func() {
+				Expect(mockObj.GetArgsForCall(0)).To(MatchArgs(123, "ERGIN"))
 			})
 
-			Describe("call count", func() {
-				It("should have a call count of 1", func() {
-					Expect(mockObj.CallCount()).To(Equal(1))
-				})
+			It("should have a call count of 1", func() {
+				Expect(mockObj.CallCount()).To(Equal(1))
 			})
 
-			Describe("R estore", func() {
+			Describe("Restore", func() {
 				BeforeEach(func() {
 					mockObj.Restore()
 					ret = myFunc(123, "ERGIN")

@@ -81,6 +81,10 @@ func (self *Mock) SetReturnFunc(function interface{}) {
 func makeFuncStub(mock *Mock, returns []interface{}) func(in []reflect.Value) []reflect.Value {
 	funcType := mock.OriginalFuncValue.Type()
 
+	if (returns != nil && len(returns) != funcType.NumOut()) {
+		panic("SetReturns: Wrong number of returns arguments.")
+	}
+
 	fake := func(in []reflect.Value) []reflect.Value {
 		inputArgs := []interface{}{}
 
@@ -117,9 +121,7 @@ func wrapFunc(mock *Mock, function interface{}) func(in []reflect.Value) []refle
 			inputArgs = append(inputArgs, value.Interface())
 		}
 
-
 		mock.Calls = append(mock.Calls, inputArgs)
-		lg("ASD", "ASD")
 		return reflect.ValueOf(function).Call(in)
 	}
 
