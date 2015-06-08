@@ -31,6 +31,7 @@ func (self *Mock) CallCount() int {
 }
 
 func lg(data string, item interface{}) {
+	return
 	log.Printf("*** %s %+V", data, item)
 	log.Printf("*** %s %+v", data, item)
 }
