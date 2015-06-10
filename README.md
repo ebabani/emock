@@ -9,6 +9,10 @@ The purpose of this library is to allow easy mocking of function calls, and ease
 go get github.com/ebabani/xmock
 `
 
+## Docs
+
+http://godoc.org/github.com/ebabani/xmock
+
 
 ## Mocking:
 
