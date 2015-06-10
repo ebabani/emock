@@ -6,26 +6,29 @@ import (
 
 // If the function being mocked returns a func, that function will be nil
 type Mock struct {
-	OriginalFuncAddr reflect.Value
-	OriginalFuncValue reflect.Value
+	originalFuncAddr reflect.Value
+	originalFuncValue reflect.Value
 
 	Calls [][]interface{}
 
 	returns []interface{}
 }
 
+// Restore the original behaviour of the function that was being mocked.
 func (self *Mock) Restore() {
-	lg("OriginalFuncAddr", self.OriginalFuncAddr)
-	lg("OriginalFuncValue", self.OriginalFuncValue)
+	lg("OriginalFuncAddr", self.originalFuncAddr)
+	lg("OriginalFuncValue", self.originalFuncValue)
 
-	self.OriginalFuncAddr.Elem().Set(self.OriginalFuncValue)
+	self.originalFuncAddr.Elem().Set(self.originalFuncValue)
 }
 
+// Returns the args for the n'th call to the mocked function
 func (self *Mock) GetArgsForCall(n int) (interface{}) {
 	args := self.Calls[n]
 	return args
 }
 
+// Returns the number of calls made to the mocked function.
 func (self *Mock) CallCount() int {
 	return len(self.Calls)
 }
@@ -36,15 +39,18 @@ func lg(data string, item interface{}) {
 	log.Printf("*** %s %+v", data, item)
 }
 
-func MockFunc(funcToMock interface{}) *Mock {
+// Mock the function at the specified address.
+//
+// By default the function will return zero values.
+func MockFunc(funcAddress interface{}) *Mock {
 	mock := Mock{}
 
-	lg("funcToMock", funcToMock)
+	lg("funcToMock", funcAddress)
 
-	funcValue := reflect.ValueOf(funcToMock)
+	funcValue := reflect.ValueOf(funcAddress)
 	lg("funcValue", funcValue)
 
-	mock.OriginalFuncAddr = funcValue
+	mock.originalFuncAddr = funcValue
 
 	funcType := funcValue.Type()
 	lg("funcType", funcType)
@@ -52,11 +58,11 @@ func MockFunc(funcToMock interface{}) *Mock {
 	funcElem := funcValue.Elem()
 	lg("funcElem", funcElem)
 
-	mock.OriginalFuncValue = reflect.New(funcValue.Elem().Type()).Elem()
-	mock.OriginalFuncValue.Set(funcElem)
+	mock.originalFuncValue = reflect.New(funcValue.Elem().Type()).Elem()
+	mock.originalFuncValue.Set(funcElem)
 
-	lg("mock.OriginalFuncAddr", mock.OriginalFuncAddr)
-	lg("mock.OriginalFuncValue", mock.OriginalFuncValue)
+	lg("mock.OriginalFuncAddr", mock.originalFuncAddr)
+	lg("mock.OriginalFuncValue", mock.originalFuncValue)
 
 
 	funcElemType := funcElem.Type()
@@ -65,22 +71,26 @@ func MockFunc(funcToMock interface{}) *Mock {
 	fake := makeFuncStub(&mock, nil)
 
 
-	mock.OriginalFuncAddr.Elem().Set(reflect.MakeFunc(mock.OriginalFuncValue.Type(), fake))
+	mock.originalFuncAddr.Elem().Set(reflect.MakeFunc(mock.originalFuncValue.Type(), fake))
 	return &mock
 }
 
+// Set what the mocked function should return. Panic if the number of return values
+// doesn't match the original function, or if the types don't match
 func (self *Mock) SetReturns(returns ...interface{}) {
 	fake := makeFuncStub(self, returns)
-	self.OriginalFuncAddr.Elem().Set(reflect.MakeFunc(self.OriginalFuncValue.Type(), fake))
+	self.originalFuncAddr.Elem().Set(reflect.MakeFunc(self.originalFuncValue.Type(), fake))
 }
 
+// Replace the mocked function with the provided one. Panics if the given function
+// signature does not match the original one.
 func (self *Mock) SetReturnFunc(function interface{}) {
 	wrap := wrapFunc(self, function)
-	self.OriginalFuncAddr.Elem().Set(reflect.MakeFunc(self.OriginalFuncValue.Type(), wrap))
+	self.originalFuncAddr.Elem().Set(reflect.MakeFunc(self.originalFuncValue.Type(), wrap))
 }
 
 func makeFuncStub(mock *Mock, returns []interface{}) func(in []reflect.Value) []reflect.Value {
-	funcType := mock.OriginalFuncValue.Type()
+	funcType := mock.originalFuncValue.Type()
 
 	if (returns != nil && len(returns) != funcType.NumOut()) {
 		panic("SetReturns: Wrong number of returns arguments.")
