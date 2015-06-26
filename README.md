@@ -1,4 +1,4 @@
-# xmock
+# emock
 Lightweight mocking library for function calls in Go
 
 The purpose of this library is to allow easy mocking of function calls, and ease dependency injection.
@@ -6,12 +6,12 @@ The purpose of this library is to allow easy mocking of function calls, and ease
 ## Get it: 
 
 `
-go get github.com/ebabani/xmock
+go get github.com/ebabani/emock
 `
 
 ## Docs
 
-http://godoc.org/github.com/ebabani/xmock
+http://godoc.org/github.com/ebabani/emock
 
 
 ## Mocking:
