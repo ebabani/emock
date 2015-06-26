@@ -36,16 +36,16 @@ It("should return an empty string", func() {
 ```
 
 #### 1 - Create a mock object
-Mock a function at the given address, and return a mock object. The mock object can be used to check how many times the focked function was called, and with what arguments. (See lines 4 and 5)
+Mock a function at the given address, and return a mock object. The mock object can be used to check how many times the mocked function was called, and with what arguments. (See lines 4 and 5)
 
 #### 2 - Restore the original function implementation
-Restore the function to behave as normal instead of the mock implemetation.
+Restore the function to its normal behaviour instead of the mock implemetation.
 
-#### 3 - Call our function with args.
+#### 3 - Call the function.
 When mocked, by default the function will return zero values, but you can also set custom return values. 
 
-#### 4 - Check the args of the first call to `myFuncc`. 
-GetArgsForCall(i) will return the args used in thte ith call to the mocked function. The args are returned as an []interface{}
+#### 4 - Check the args of the first call to `myFunc`. 
+GetArgsForCall(i) will return the args used in the i'th call to the mocked function. The args are returned as an []interface{}
 
 MatchArgs is a custom gomega matcher to make it easier to check if the function was called with the right args. 
 
@@ -53,9 +53,6 @@ MatchArgs is a custom gomega matcher to make it easier to check if the function 
 How many times the mocked function was called.
 
 #### 6 Check the return value of the mocked function
-By default when smoething is mocked it will return zero values for all its returns. (See https://golang.org/ref/spec#The_zero_value)
+By default when something is mocked it will return zero values for all its returns. (See https://golang.org/ref/spec#The_zero_value)
 
 You can use `mockObj.SetReturns` to set custom returns, or `mockObj.SetReturnFunc` to replace the mocked function with another one with the same signature. 
-
-
-
