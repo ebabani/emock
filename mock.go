@@ -1,4 +1,4 @@
-package xmock
+package emock
 import (
 	"log"
 	"reflect"
@@ -18,7 +18,6 @@ type Mock struct {
 func (self *Mock) Restore() {
 	lg("OriginalFuncAddr", self.originalFuncAddr)
 	lg("OriginalFuncValue", self.originalFuncValue)
-
 	self.originalFuncAddr.Elem().Set(self.originalFuncValue)
 }
 

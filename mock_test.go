@@ -1,11 +1,11 @@
-package xmock_test
+package emock_test
 
 import (
-	. "github.com/ebabani/xmock"
+	. "github.com/ebabani/emock"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	. "github.com/ebabani/xmock/matchers"
+	. "github.com/ebabani/emock/matchers"
 
 	"fmt"
 )

@@ -1,4 +1,4 @@
-package xmock_test
+package emock_test
 
 import (
 	. "github.com/onsi/ginkgo"
@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestXmock(t *testing.T) {
+func TestEmock(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Xmock Suite")
+	RunSpecs(t, "Emock Suite")
 }
